@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let tabBarVc = TabBarController(viewControllers: [habitsVC, infoVC])
         tabBarVc.tabBar.backgroundColor = .white
-        tabBarVc.tabBar.tintColor = UIColor(named: "purple")
+        tabBarVc.tabBar.tintColor = .purple
         window.rootViewController = tabBarVc
         window.makeKeyAndVisible()
         self.window = window

@@ -15,6 +15,13 @@
 		4586F2BF28872F52006993AB /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2BE28872F52006993AB /* InfoViewController.swift */; };
 		4586F2C128873230006993AB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2C028873230006993AB /* TabBarController.swift */; };
 		4586F2C4288739D0006993AB /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2C3288739D0006993AB /* HabitsStore.swift */; };
+		45FA2CCB288C03F2008C128B /* SFProText-Regular-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45FA2CC9288C03F2008C128B /* SFProText-Regular-1.ttf */; };
+		45FA2CCF288C0632008C128B /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA2CCE288C0632008C128B /* Fonts.swift */; };
+		45FA2CD1288C079D008C128B /* HabitsInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA2CD0288C079D008C128B /* HabitsInformation.swift */; };
+		45FA2CD3288C0B17008C128B /* SFProDisplay-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45FA2CD2288C0B17008C128B /* SFProDisplay-Semibold.ttf */; };
+		45FA2CD5288C0F6B008C128B /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA2CD4288C0F6B008C128B /* Divider.swift */; };
+		45FA2CD7288C14B3008C128B /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA2CD6288C14B3008C128B /* HabitViewController.swift */; };
+		45FA2CD9288C18EA008C128B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA2CD8288C18EA008C128B /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +35,13 @@
 		4586F2BE28872F52006993AB /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		4586F2C028873230006993AB /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4586F2C3288739D0006993AB /* HabitsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
+		45FA2CC9288C03F2008C128B /* SFProText-Regular-1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular-1.ttf"; sourceTree = "<group>"; };
+		45FA2CCE288C0632008C128B /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		45FA2CD0288C079D008C128B /* HabitsInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsInformation.swift; sourceTree = "<group>"; };
+		45FA2CD2288C0B17008C128B /* SFProDisplay-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Semibold.ttf"; sourceTree = "<group>"; };
+		45FA2CD4288C0F6B008C128B /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
+		45FA2CD6288C14B3008C128B /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
+		45FA2CD8288C18EA008C128B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +74,12 @@
 		4586F2A928872BBC006993AB /* MyHabbits */ = {
 			isa = PBXGroup;
 			children = (
+				45FA2CCD288C061F008C128B /* MyHabbitsResource */,
 				4586F2C2288739B6006993AB /* Storage */,
 				4586F2AA28872BBC006993AB /* AppDelegate.swift */,
 				4586F2AC28872BBC006993AB /* SceneDelegate.swift */,
 				4586F2AE28872BBC006993AB /* HabitsViewController.swift */,
+				45FA2CD6288C14B3008C128B /* HabitViewController.swift */,
 				4586F2BE28872F52006993AB /* InfoViewController.swift */,
 				4586F2B328872BC0006993AB /* Assets.xcassets */,
 				4586F2B528872BC0006993AB /* LaunchScreen.storyboard */,
@@ -77,8 +93,29 @@
 			isa = PBXGroup;
 			children = (
 				4586F2C3288739D0006993AB /* HabitsStore.swift */,
+				45FA2CD0288C079D008C128B /* HabitsInformation.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		45FA2CC8288C03F2008C128B /* SF Pro Text */ = {
+			isa = PBXGroup;
+			children = (
+				45FA2CD2288C0B17008C128B /* SFProDisplay-Semibold.ttf */,
+				45FA2CC9288C03F2008C128B /* SFProText-Regular-1.ttf */,
+			);
+			path = "SF Pro Text";
+			sourceTree = "<group>";
+		};
+		45FA2CCD288C061F008C128B /* MyHabbitsResource */ = {
+			isa = PBXGroup;
+			children = (
+				45FA2CC8288C03F2008C128B /* SF Pro Text */,
+				45FA2CCE288C0632008C128B /* Fonts.swift */,
+				45FA2CD4288C0F6B008C128B /* Divider.swift */,
+				45FA2CD8288C18EA008C128B /* Colors.swift */,
+			);
+			path = MyHabbitsResource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +176,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FA2CCB288C03F2008C128B /* SFProText-Regular-1.ttf in Resources */,
 				4586F2B728872BC0006993AB /* LaunchScreen.storyboard in Resources */,
+				45FA2CD3288C0B17008C128B /* SFProDisplay-Semibold.ttf in Resources */,
 				4586F2B428872BC0006993AB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,11 +190,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FA2CCF288C0632008C128B /* Fonts.swift in Sources */,
+				45FA2CD9288C18EA008C128B /* Colors.swift in Sources */,
 				4586F2C4288739D0006993AB /* HabitsStore.swift in Sources */,
 				4586F2AF28872BBC006993AB /* HabitsViewController.swift in Sources */,
+				45FA2CD5288C0F6B008C128B /* Divider.swift in Sources */,
 				4586F2AB28872BBC006993AB /* AppDelegate.swift in Sources */,
 				4586F2BF28872F52006993AB /* InfoViewController.swift in Sources */,
 				4586F2C128873230006993AB /* TabBarController.swift in Sources */,
+				45FA2CD7288C14B3008C128B /* HabitViewController.swift in Sources */,
+				45FA2CD1288C079D008C128B /* HabitsInformation.swift in Sources */,
 				4586F2AD28872BBC006993AB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
