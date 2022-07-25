@@ -35,7 +35,7 @@
 		457FCB62288D25BC00503E2B /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
 		457FCB64288D731A00503E2B /* HeaderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionView.swift; sourceTree = "<group>"; };
 		457FCB66288D8C9000503E2B /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
-		4586F2A728872BBC006993AB /* MyHabbits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabbits.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4586F2A728872BBC006993AB /* MyHabits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4586F2AA28872BBC006993AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4586F2AC28872BBC006993AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4586F2AE28872BBC006993AB /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		4586F29E28872BBC006993AB = {
 			isa = PBXGroup;
 			children = (
-				4586F2A928872BBC006993AB /* MyHabbits */,
+				4586F2A928872BBC006993AB /* MyHabits */,
 				4586F2A828872BBC006993AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,12 +105,12 @@
 		4586F2A828872BBC006993AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4586F2A728872BBC006993AB /* MyHabbits.app */,
+				4586F2A728872BBC006993AB /* MyHabits.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4586F2A928872BBC006993AB /* MyHabbits */ = {
+		4586F2A928872BBC006993AB /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
 				457FCB5C288D159000503E2B /* HabitsList */,
@@ -124,7 +124,7 @@
 				4586F2B828872BC0006993AB /* Info.plist */,
 				4586F2C028873230006993AB /* TabBarController.swift */,
 			);
-			path = MyHabbits;
+			path = MyHabits;
 			sourceTree = "<group>";
 		};
 		4586F2C2288739B6006993AB /* Storage */ = {
@@ -160,9 +160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4586F2A628872BBC006993AB /* MyHabbits */ = {
+		4586F2A628872BBC006993AB /* MyHabits */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4586F2BB28872BC0006993AB /* Build configuration list for PBXNativeTarget "MyHabbits" */;
+			buildConfigurationList = 4586F2BB28872BC0006993AB /* Build configuration list for PBXNativeTarget "MyHabits" */;
 			buildPhases = (
 				4586F2A328872BBC006993AB /* Sources */,
 				4586F2A428872BBC006993AB /* Frameworks */,
@@ -172,9 +172,9 @@
 			);
 			dependencies = (
 			);
-			name = MyHabbits;
+			name = MyHabits;
 			productName = MyHabbits;
-			productReference = 4586F2A728872BBC006993AB /* MyHabbits.app */;
+			productReference = 4586F2A728872BBC006993AB /* MyHabits.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -205,7 +205,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4586F2A628872BBC006993AB /* MyHabbits */,
+				4586F2A628872BBC006993AB /* MyHabits */,
 			);
 		};
 /* End PBXProject section */
@@ -385,7 +385,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 92MNK9H779;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyHabbits/Info.plist;
+				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyHabits;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
@@ -397,7 +398,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MariaK.MyHabbits;
+				PRODUCT_BUNDLE_IDENTIFIER = MariaK.MyHabits;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -414,7 +415,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 92MNK9H779;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyHabbits/Info.plist;
+				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyHabits;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
@@ -426,7 +428,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MariaK.MyHabbits;
+				PRODUCT_BUNDLE_IDENTIFIER = MariaK.MyHabits;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -446,7 +448,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4586F2BB28872BC0006993AB /* Build configuration list for PBXNativeTarget "MyHabbits" */ = {
+		4586F2BB28872BC0006993AB /* Build configuration list for PBXNativeTarget "MyHabits" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4586F2BC28872BC0006993AB /* Debug */,

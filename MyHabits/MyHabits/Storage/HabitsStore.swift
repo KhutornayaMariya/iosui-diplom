@@ -1,6 +1,6 @@
 //
 //  HabitsStore.swift
-//  MyHabbits
+//  MyHabits
 //
 //  Created by m.khutornaya on 19.07.2022.
 //

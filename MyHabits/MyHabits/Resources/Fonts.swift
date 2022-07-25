@@ -1,6 +1,6 @@
 //
 //  Fonts.swift
-//  MyHabbits
+//  MyHabits
 //
 //  Created by m.khutornaya on 23.07.2022.
 //

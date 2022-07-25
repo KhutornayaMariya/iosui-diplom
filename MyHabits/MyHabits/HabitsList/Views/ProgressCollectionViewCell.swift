@@ -1,6 +1,6 @@
 //
 //  ProgressCollectionViewCell.swift
-//  MyHabbits
+//  MyHabits
 //
 //  Created by m.khutornaya on 24.07.2022.
 //
