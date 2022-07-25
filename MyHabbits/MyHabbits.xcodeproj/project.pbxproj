@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		457FCB5E288D176D00503E2B /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FCB5D288D176D00503E2B /* ProgressCollectionViewCell.swift */; };
+		457FCB60288D244600503E2B /* HabitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FCB5F288D244600503E2B /* HabitCollectionViewCell.swift */; };
+		457FCB63288D25BC00503E2B /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FCB62288D25BC00503E2B /* RadioButton.swift */; };
+		457FCB65288D731A00503E2B /* HeaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FCB64288D731A00503E2B /* HeaderCollectionView.swift */; };
+		457FCB67288D8C9000503E2B /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FCB66288D8C9000503E2B /* HabitDetailsViewController.swift */; };
 		4586F2AB28872BBC006993AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2AA28872BBC006993AB /* AppDelegate.swift */; };
 		4586F2AD28872BBC006993AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2AC28872BBC006993AB /* SceneDelegate.swift */; };
 		4586F2AF28872BBC006993AB /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586F2AE28872BBC006993AB /* HabitsViewController.swift */; };
@@ -25,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		457FCB5D288D176D00503E2B /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
+		457FCB5F288D244600503E2B /* HabitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewCell.swift; sourceTree = "<group>"; };
+		457FCB62288D25BC00503E2B /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		457FCB64288D731A00503E2B /* HeaderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionView.swift; sourceTree = "<group>"; };
+		457FCB66288D8C9000503E2B /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		4586F2A728872BBC006993AB /* MyHabbits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabbits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4586F2AA28872BBC006993AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4586F2AC28872BBC006993AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +65,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		457FCB5B288D157E00503E2B /* Habit */ = {
+			isa = PBXGroup;
+			children = (
+				45FA2CD6288C14B3008C128B /* HabitViewController.swift */,
+				457FCB66288D8C9000503E2B /* HabitDetailsViewController.swift */,
+			);
+			path = Habit;
+			sourceTree = "<group>";
+		};
+		457FCB5C288D159000503E2B /* HabitsList */ = {
+			isa = PBXGroup;
+			children = (
+				457FCB61288D259500503E2B /* Views */,
+				4586F2AE28872BBC006993AB /* HabitsViewController.swift */,
+			);
+			path = HabitsList;
+			sourceTree = "<group>";
+		};
+		457FCB61288D259500503E2B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				457FCB5D288D176D00503E2B /* ProgressCollectionViewCell.swift */,
+				457FCB5F288D244600503E2B /* HabitCollectionViewCell.swift */,
+				457FCB64288D731A00503E2B /* HeaderCollectionView.swift */,
+				457FCB62288D25BC00503E2B /* RadioButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		4586F29E28872BBC006993AB = {
 			isa = PBXGroup;
 			children = (
@@ -74,14 +113,13 @@
 		4586F2A928872BBC006993AB /* MyHabbits */ = {
 			isa = PBXGroup;
 			children = (
-				45FA2CCD288C061F008C128B /* MyHabbitsResource */,
+				457FCB5C288D159000503E2B /* HabitsList */,
+				457FCB5B288D157E00503E2B /* Habit */,
 				4586F2C2288739B6006993AB /* Storage */,
+				45FA2CCD288C061F008C128B /* Resources */,
 				4586F2AA28872BBC006993AB /* AppDelegate.swift */,
 				4586F2AC28872BBC006993AB /* SceneDelegate.swift */,
-				4586F2AE28872BBC006993AB /* HabitsViewController.swift */,
-				45FA2CD6288C14B3008C128B /* HabitViewController.swift */,
 				4586F2BE28872F52006993AB /* InfoViewController.swift */,
-				4586F2B328872BC0006993AB /* Assets.xcassets */,
 				4586F2B528872BC0006993AB /* LaunchScreen.storyboard */,
 				4586F2B828872BC0006993AB /* Info.plist */,
 				4586F2C028873230006993AB /* TabBarController.swift */,
@@ -107,15 +145,16 @@
 			path = "SF Pro Text";
 			sourceTree = "<group>";
 		};
-		45FA2CCD288C061F008C128B /* MyHabbitsResource */ = {
+		45FA2CCD288C061F008C128B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				45FA2CC8288C03F2008C128B /* SF Pro Text */,
 				45FA2CCE288C0632008C128B /* Fonts.swift */,
 				45FA2CD4288C0F6B008C128B /* Divider.swift */,
 				45FA2CD8288C18EA008C128B /* Colors.swift */,
+				4586F2B328872BC0006993AB /* Assets.xcassets */,
 			);
-			path = MyHabbitsResource;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,8 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				457FCB67288D8C9000503E2B /* HabitDetailsViewController.swift in Sources */,
 				45FA2CCF288C0632008C128B /* Fonts.swift in Sources */,
 				45FA2CD9288C18EA008C128B /* Colors.swift in Sources */,
+				457FCB63288D25BC00503E2B /* RadioButton.swift in Sources */,
+				457FCB5E288D176D00503E2B /* ProgressCollectionViewCell.swift in Sources */,
 				4586F2C4288739D0006993AB /* HabitsStore.swift in Sources */,
 				4586F2AF28872BBC006993AB /* HabitsViewController.swift in Sources */,
 				45FA2CD5288C0F6B008C128B /* Divider.swift in Sources */,
@@ -199,6 +241,8 @@
 				4586F2BF28872F52006993AB /* InfoViewController.swift in Sources */,
 				4586F2C128873230006993AB /* TabBarController.swift in Sources */,
 				45FA2CD7288C14B3008C128B /* HabitViewController.swift in Sources */,
+				457FCB60288D244600503E2B /* HabitCollectionViewCell.swift in Sources */,
+				457FCB65288D731A00503E2B /* HeaderCollectionView.swift in Sources */,
 				45FA2CD1288C079D008C128B /* HabitsInformation.swift in Sources */,
 				4586F2AD28872BBC006993AB /* SceneDelegate.swift in Sources */,
 			);
@@ -345,6 +389,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -373,6 +418,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

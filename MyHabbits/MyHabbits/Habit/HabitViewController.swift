@@ -47,7 +47,7 @@ class HabitViewController: UIViewController {
         return view
     }()
 
-    private let colorButton: UIButton = {
+    private lazy var colorButton: UIButton = {
         let view = UIButton()
 
         view.layer.cornerRadius = .colorCircleSize/2
@@ -57,13 +57,14 @@ class HabitViewController: UIViewController {
         return view
     }()
 
-    private let habitNameInput: UITextField = {
+    private lazy var habitNameInput: UITextField = {
         let view = UITextField()
 
         view.placeholder = .inputPlaceholder
         view.font = .sfProRegular(size: 17)
         view.textColor = .black
         view.textAlignment = .left
+        view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -79,7 +80,7 @@ class HabitViewController: UIViewController {
         return view
     }()
 
-    private let timePicker: UIDatePicker = {
+    private lazy var timePicker: UIDatePicker = {
         let view = UIDatePicker()
 
         view.datePickerMode = .time
@@ -254,6 +255,13 @@ extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         color = viewController.selectedColor
         self.colorButton.backgroundColor = color
+    }
+}
+
+extension HabitViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
     }
 }
 
