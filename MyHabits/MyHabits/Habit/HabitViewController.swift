@@ -9,39 +9,37 @@ import UIKit
 
 class HabitViewController: UIViewController {
 
-    private var color: UIColor
-    private var habitName: String?
-    private var time: Date
-    private var timeDescription: String?
+    private let viewModel: Habit?
+    private var selectedColor: UIColor
 
-    private let habitNameHeader: UILabel = {
+    private let nameHeader: UILabel = {
         let view = UILabel()
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .habitNameTitle.uppercased()
+        view.text = .nameHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
 
-    private let habitColorHeader: UILabel = {
+    private let colorHeader: UILabel = {
         let view = UILabel()
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .habitColorTitle.uppercased()
+        view.text = .colorHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
 
-    private let habitTimeHeader: UILabel = {
+    private let timeHeader: UILabel = {
         let view = UILabel()
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .habitTimeTitle.uppercased()
+        view.text = .timeHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -51,6 +49,7 @@ class HabitViewController: UIViewController {
         let view = UIButton()
 
         view.layer.cornerRadius = .colorCircleSize/2
+        view.backgroundColor = selectedColor
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(didTapColor), for: .touchUpInside)
 
@@ -60,7 +59,7 @@ class HabitViewController: UIViewController {
     private lazy var habitNameInput: UITextField = {
         let view = UITextField()
 
-        view.placeholder = .inputPlaceholder
+        view.placeholder = .placeholder
         view.font = .sfProRegular(size: 17)
         view.textColor = .black
         view.textAlignment = .left
@@ -85,10 +84,40 @@ class HabitViewController: UIViewController {
 
         view.datePickerMode = .time
         view.preferredDatePickerStyle = .wheels
+        view.setDate(Date(), animated: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(changeTime), for: .valueChanged)
 
         return view
+    }()
+
+    private lazy var deleteButton: UIButton = {
+        let view = UIButton()
+
+        view.isHidden = true
+        view.setTitle(.alertTitle, for: .normal)
+        view.setTitleColor(.red, for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(didTapDelete), for: .touchUpInside)
+
+        return view
+    }()
+
+    private lazy var alert: UIAlertController = {
+        guard let viewModel = viewModel else { return UIAlertController() }
+
+        let message = "\(String.alertMessage) \"\(viewModel.name)\"?"
+        let alert = UIAlertController(title: .alertTitle, message: message, preferredStyle: .alert)
+        let positive = UIAlertAction(title: .alertPositiveText, style: .cancel)
+        let negative = UIAlertAction(title: .alertNegativeText, style: .destructive) {
+            UIAlertAction in
+            self.deleteHabitIfNeeded(viewModel)
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        alert.addAction(positive)
+        alert.addAction(negative)
+
+        return alert
     }()
 
     private lazy var dateFormatter: DateFormatter = {
@@ -102,12 +131,9 @@ class HabitViewController: UIViewController {
 
     // MARK: - Life Cycle
 
-    init(color: UIColor = .orange, habitName: String? = nil, time: Date = Date(), timeDescription: String? = nil) {
-        self.color = color
-        self.habitName = habitName
-        self.time = time
-        self.timeDescription = timeDescription
-
+    init(viewModel: Habit?) {
+        self.viewModel = viewModel
+        self.selectedColor = viewModel?.color ?? .purple
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -123,74 +149,84 @@ class HabitViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
         setupNavigationBar()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
 
     // MARK: - Private functions
 
     private func setup() {
-        title = "Создать"
+        title = .title
         setupHabitProperty()
-        let subviews = [habitNameHeader, habitColorHeader, habitTimeHeader, colorButton, habitNameInput, timePicker, habitTimeDescription]
+        let subviews = [nameHeader, colorHeader, timeHeader,
+                        colorButton, habitNameInput, timePicker, habitTimeDescription, deleteButton]
         subviews.forEach {view.addSubview($0) }
 
         NSLayoutConstraint.activate([
-            habitNameHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
-            habitNameHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            habitNameHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            nameHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
+            nameHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
+            nameHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
 
-            habitNameInput.topAnchor.constraint(equalTo: habitNameHeader.bottomAnchor, constant: 7),
+            habitNameInput.topAnchor.constraint(equalTo: nameHeader.bottomAnchor, constant: .topPropertyAnchor),
             habitNameInput.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
             habitNameInput.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
 
-            habitColorHeader.topAnchor.constraint(equalTo: habitNameInput.bottomAnchor, constant: 15),
-            habitColorHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            habitColorHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            colorHeader.topAnchor.constraint(equalTo: habitNameInput.bottomAnchor, constant: .topHeaderAnchor),
+            colorHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
+            colorHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
 
-            colorButton.topAnchor.constraint(equalTo: habitColorHeader.bottomAnchor, constant: 7),
+            colorButton.topAnchor.constraint(equalTo: colorHeader.bottomAnchor, constant: .topPropertyAnchor),
             colorButton.heightAnchor.constraint(equalToConstant: .colorCircleSize),
             colorButton.widthAnchor.constraint(equalToConstant: .colorCircleSize),
             colorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
 
-            habitTimeHeader.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: 15),
-            habitTimeHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            habitTimeHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            timeHeader.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: .topHeaderAnchor),
+            timeHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
+            timeHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
 
-            habitTimeDescription.topAnchor.constraint(equalTo: habitTimeHeader.bottomAnchor, constant: 7),
+            habitTimeDescription.topAnchor.constraint(equalTo: timeHeader.bottomAnchor, constant: .topPropertyAnchor),
             habitTimeDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
             habitTimeDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
 
-            timePicker.topAnchor.constraint(equalTo: habitTimeDescription.bottomAnchor, constant: 15),
+            timePicker.topAnchor.constraint(equalTo: habitTimeDescription.bottomAnchor, constant: .topHeaderAnchor),
             timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
             timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+
+            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -.safeArea)
         ])
     }
 
     private func setupHabitProperty() {
-        colorButton.backgroundColor = color
+        deleteButton.isHidden = viewModel == nil ? true : false
+        colorButton.backgroundColor = selectedColor
+        setupTimePicker()
         setupTimeDescription()
         setupHabitName()
     }
 
-    private func setupTimeDescription() {
-        if let timeDescription = timeDescription {
-            self.timeDescription = timeDescription
-        } else {
-            self.timeDescription = "Каждый день в " + dateFormatter.string(from: time)
-        }
-        let attributedString = NSMutableAttributedString(string: timeDescription!)
-        let range = attributedString.getRangeOfString(textToFind: dateFormatter.string(from: time))
-        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple, range: range)
+    private func setupTimePicker() {
+        guard let viewModel = viewModel else { return }
+        timePicker.setDate(viewModel.date, animated: true)
+    }
 
+    private func setupTimeDescription() {
+        let date = timePicker.date
+        let attributedString = NSMutableAttributedString(string: .timeDescription + dateFormatter.string(from: date))
+        let range = attributedString.getRangeOfString(textToFind: dateFormatter.string(from: date))
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple, range: range)
         habitTimeDescription.attributedText = attributedString
     }
 
     private func setupHabitName() {
-        guard let habitName = habitName, !habitName.isEmpty else {
-            return
-        }
+        guard let viewModel = viewModel else { return }
         let attributes = [NSAttributedString.Key.font: UIFont.sfProSemibold(size: 17)]
-        let attributedString = NSAttributedString(string: habitName, attributes: attributes)
+        let attributedString = NSAttributedString(string: viewModel.name, attributes: attributes)
         habitNameInput.attributedText = attributedString
     }
 
@@ -198,20 +234,25 @@ class HabitViewController: UIViewController {
         let navBar: UINavigationBar? = navigationController?.navigationBar
         navBar?.isHidden = false
         navBar?.backgroundColor = .white
+        navBar?.tintColor = .purple
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: .createNavBarButton,
             style: .plain,
             target: self,
             action: #selector(didTapSaveButton))
-        navigationItem.rightBarButtonItem?.tintColor = .purple
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: .cancelNavBarButton,
             style: .plain,
             target: self,
             action: #selector(didTapCancelButton))
-        navigationItem.leftBarButtonItem?.tintColor = .purple
+    }
+
+    private func deleteHabitIfNeeded(_ viewModel: Habit) {
+        if let habit = HabitsStore.shared.habits.firstIndex(where: {$0.name == viewModel.name}) {
+            HabitsStore.shared.habits.remove(at: habit)
+        }
     }
 
     // MARK: - Actions
@@ -220,32 +261,48 @@ class HabitViewController: UIViewController {
         guard let habitName = habitNameInput.text, !habitName.isEmpty else {
             return
         }
-        let newHabit = Habit(name: habitName,
-                             date: timePicker.date,
-                             color: color)
-        let store = HabitsStore.shared
-        store.habits.append(newHabit)
-        dismiss(animated: true, completion: nil)
+        guard let viewModel = viewModel,
+              let index = HabitsStore.shared.habits.firstIndex(where: {$0.name == viewModel.name}) else {
+            let newHabit = Habit(name: habitName,
+                                 date: timePicker.date,
+                                 color: selectedColor)
+            let store = HabitsStore.shared
+            store.habits.append(newHabit)
+
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        viewModel.name = habitName
+        viewModel.date = timePicker.date
+        viewModel.color = selectedColor
+        HabitsStore.shared.habits.remove(at: index)
+        HabitsStore.shared.habits.insert(viewModel, at: index)
+
+        navigationController?.popToRootViewController(animated: true)
     }
 
     @objc private func didTapCancelButton() {
-        dismiss(animated: true, completion: nil)
+        guard viewModel != nil else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        navigationController?.popToRootViewController(animated: true)
     }
 
     @objc private func didTapColor() {
         let picker = UIColorPickerViewController()
-        picker.selectedColor = color
+        picker.selectedColor = selectedColor
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
 
     @objc private func changeTime() {
-        let date = timePicker.date
+        setupTimeDescription()
+    }
 
-        let attributedString = NSMutableAttributedString(string: "Каждый день в " + dateFormatter.string(from: date))
-        let range = attributedString.getRangeOfString(textToFind: dateFormatter.string(from: date))
-        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple, range: range)
-        habitTimeDescription.attributedText = attributedString
+    @objc private func didTapDelete() {
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -253,8 +310,8 @@ class HabitViewController: UIViewController {
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        color = viewController.selectedColor
-        self.colorButton.backgroundColor = color
+        selectedColor = viewController.selectedColor
+        self.colorButton.backgroundColor = selectedColor
     }
 }
 
@@ -272,15 +329,24 @@ extension NSMutableAttributedString {
 }
 
 private extension String {
+    static let title = "Создать"
     static let cancelNavBarButton = "Отменить"
     static let createNavBarButton = "Сохранить"
-    static let habitNameTitle = "название"
-    static let habitColorTitle = "цвет"
-    static let habitTimeTitle = "время"
-    static let inputPlaceholder = "Бегать по утрам, спать 8 часов и т.п."
+    static let nameHeader = "название"
+    static let colorHeader = "цвет"
+    static let timeHeader = "время"
+    static let placeholder = "Бегать по утрам, спать 8 часов и т.п."
+    static let timeDescription = "Каждый день в "
+
+    static let alertTitle: String = "Удалить привычку"
+    static let alertMessage: String = "Вы хотите удалить привычку "
+    static let alertPositiveText: String = "Отмена"
+    static let alertNegativeText: String = "Удалить"
 }
 
 private extension CGFloat {
     static let colorCircleSize: CGFloat = 30
     static let safeArea: CGFloat = 16
+    static let topHeaderAnchor: CGFloat = 15
+    static let topPropertyAnchor: CGFloat = 7
 }

@@ -16,7 +16,7 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
         let view = UILabel()
 
         view.font = .sfProSemibold(size: 13)
-        view.text = "Все получится!"
+        view.text = .title
         view.textColor = .systemGray
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -70,7 +70,6 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
     }
 
     private func updateProgressBarConstraint(_ progress: Float) {
-        guard progress != 0 else { return }
         let defaultSize = UIScreen.main.bounds.size.width - 4 * .safeArea
         filledProgressBarConstraint.constant = -defaultSize * (1.0 - CGFloat(progress))
         filledProgressBar.isHidden = false
@@ -103,6 +102,10 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
             filledProgressBarConstraint
         ])
     }
+}
+
+private extension String {
+    static let title = "Все получится!"
 }
 
 private extension CGFloat {

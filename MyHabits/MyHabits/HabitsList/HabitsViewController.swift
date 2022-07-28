@@ -11,24 +11,18 @@ class HabitsViewController: UIViewController {
 
     private var dataItems: [Habit] = []
 
-    private let header: HeaderCollectionView = {
-        let view = HeaderCollectionView()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
-
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
 
         view.backgroundColor = UIColor.lightGray
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.dataSource = self
         view.delegate = self
         view.showsVerticalScrollIndicator = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+
         view.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: "HabitCollectionViewCell")
         view.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "ProgressCollectionViewCell")
+
         return view
     }()
 
@@ -44,16 +38,17 @@ class HabitsViewController: UIViewController {
         setupNavigationBar()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
     private func setup() {
+        title = .title
         view.backgroundColor = .white
-        [header, collectionView].forEach { view.addSubview($0) }
+        view.addSubview(collectionView)
 
         NSLayoutConstraint.activate([
-            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            collectionView.topAnchor.constraint(equalTo: header.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -65,6 +60,7 @@ class HabitsViewController: UIViewController {
         navBar?.isHidden = false
         navBar?.backgroundColor = .white
         navBar?.shadowImage = UIImage()
+        navBar?.prefersLargeTitles = true
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "plus"),
@@ -88,7 +84,7 @@ class HabitsViewController: UIViewController {
     }
 
     @objc private func didTapAddButton() {
-        let habitVC = HabitViewController()
+        let habitVC = HabitViewController(viewModel: nil)
         let navigation = UINavigationController(rootViewController: habitVC)
         navigation.modalPresentationStyle = .fullScreen
         present(navigation, animated: true, completion: nil)
@@ -122,15 +118,17 @@ extension HabitsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case .progressSectionIndex:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCollectionViewCell", for: indexPath) as! ProgressCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "ProgressCollectionViewCell", for: indexPath) as! ProgressCollectionViewCell
             let todayProgress = HabitsStore.shared.todayProgress
             cell.configure(with: todayProgress)
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitCollectionViewCell", for: indexPath) as! HabitCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "HabitCollectionViewCell", for: indexPath) as! HabitCollectionViewCell
             let habitData = dataItems[indexPath.row]
             cell.configure(with: habitData)
-            cell.onTapHander = { [weak self] in self?.onTrackerTap(habit: habitData) }
+            cell.onTapTrackerHander = { [weak self] in self?.onTrackerTap(habit: habitData) }
             return cell
         }
     }
@@ -163,7 +161,7 @@ private extension NSCollectionLayoutSection {
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 12
-        section.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: .safeArea, bottom: 0, trailing: .safeArea)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: .safeArea, bottom: .safeArea, trailing: .safeArea)
 
         return section
     }()
@@ -175,9 +173,14 @@ extension HabitsViewController: UICollectionViewDelegate {
         case .progressSectionIndex:
             return
         default:
-            navigationController?.pushViewController(HabitDetailsViewController(), animated: true)
+            let habit = dataItems[indexPath.row]
+            navigationController?.pushViewController(HabitDetailsViewController(viewModel: habit), animated: true)
         }
     }
+}
+
+private extension String {
+    static let title = "Сегодня"
 }
 
 private extension Int {

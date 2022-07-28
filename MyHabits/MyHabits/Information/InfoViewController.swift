@@ -64,7 +64,7 @@ class InfoViewController: UIViewController {
     }
 
     private func setup() {
-        title = "Информация"
+        title = .title
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -99,4 +99,8 @@ class InfoViewController: UIViewController {
 
 private extension CGFloat {
     static let safeArea: CGFloat = 16
+}
+
+private extension String {
+    static let title = "Информация"
 }
