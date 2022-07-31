@@ -103,9 +103,7 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func tapWrapper() {
-        if onTapTrackerHander != nil {
-            onTapTrackerHander?()
-        }
+        self.onTapTrackerHander?()
     }
 }
 
