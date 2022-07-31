@@ -10,8 +10,6 @@ import UIKit
 final class ProgressCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "ProgressCollectionViewCell"
 
-    private var filledProgressBarConstraint: NSLayoutConstraint!
-
     private let title: UILabel = {
         let view = UILabel()
 
@@ -33,23 +31,15 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let defaultProgressBar: UIView = {
-        let view = UIView()
+    private let progressBar: UIProgressView = {
+        let view = UIProgressView()
 
-        view.backgroundColor = .lightGray
+        view.progressViewStyle = .bar
+        view.trackTintColor = .lightGray
+        view.tintColor = .purple
         view.layer.cornerRadius = .barHeight/2
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
-
-    private let filledProgressBar: UIView = {
-        let view = UIView()
-
-        view.backgroundColor = .purple
-        view.layer.cornerRadius = .barHeight/2
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
 
         return view
     }()
@@ -66,23 +56,15 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
 
     public func configure(with progress: Float) {
         self.progress.text = String(Int(progress * 100)) + "%"
-        updateProgressBarConstraint(progress)
-    }
-
-    private func updateProgressBarConstraint(_ progress: Float) {
-        let defaultSize = UIScreen.main.bounds.size.width - 4 * .safeArea
-        filledProgressBarConstraint.constant = -defaultSize * (1.0 - CGFloat(progress))
-        filledProgressBar.isHidden = false
+        progressBar.setProgress(progress, animated: true)
     }
 
     private func setup() {
         backgroundColor = .white
-        let subviews = [title, progress, defaultProgressBar, filledProgressBar]
+        let subviews = [title, progress, progressBar]
         subviews.forEach { addSubview($0) }
         layer.cornerRadius = 8
 
-        filledProgressBarConstraint = filledProgressBar.widthAnchor.constraint(equalTo: defaultProgressBar.widthAnchor)
-        
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 60),
             title.topAnchor.constraint(equalTo: topAnchor, constant: .topAnchor),
@@ -91,15 +73,10 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
             progress.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
             progress.topAnchor.constraint(equalTo: topAnchor, constant: .topAnchor),
 
-            defaultProgressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
-            defaultProgressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
-            defaultProgressBar.topAnchor.constraint(equalTo: progress.bottomAnchor, constant: .topAnchor),
-            defaultProgressBar.heightAnchor.constraint(equalToConstant: .barHeight),
-
-            filledProgressBar.leadingAnchor.constraint(equalTo: defaultProgressBar.leadingAnchor),
-            filledProgressBar.heightAnchor.constraint(equalTo: defaultProgressBar.heightAnchor),
-            filledProgressBar.topAnchor.constraint(equalTo: defaultProgressBar.topAnchor),
-            filledProgressBarConstraint
+            progressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
+            progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
+            progressBar.topAnchor.constraint(equalTo: progress.bottomAnchor, constant: .topAnchor),
+            progressBar.heightAnchor.constraint(equalToConstant: .barHeight)
         ])
     }
 }
