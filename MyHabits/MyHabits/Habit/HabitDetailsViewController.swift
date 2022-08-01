@@ -13,6 +13,12 @@ struct TrackedDateModel {
 }
 
 class HabitDetailsViewController: UIViewController {
+
+    private enum Text {
+        static let editNavBarButton = "Править"
+        static let backNavBarButton = "Сегодня"
+        static let sectionHeader = "Активность"
+    }
     
     private let viewModel: Habit
     
@@ -80,7 +86,7 @@ class HabitDetailsViewController: UIViewController {
         navBar?.prefersLargeTitles = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: .editNavBarButton,
+            title: Text.editNavBarButton,
             style: .plain,
             target: self,
             action: #selector(didTapEditButton))
@@ -108,12 +114,6 @@ extension HabitDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return .sectionHeader.uppercased()
+        return Text.sectionHeader.uppercased()
     }
-}
-
-private extension String {
-    static let editNavBarButton = "Править"
-    static let backNavBarButton = "Сегодня"
-    static let sectionHeader = "Активность"
 }

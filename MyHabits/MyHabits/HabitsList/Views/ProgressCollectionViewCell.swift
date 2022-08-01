@@ -10,11 +10,18 @@ import UIKit
 final class ProgressCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "ProgressCollectionViewCell"
 
+    private enum Constants {
+        static let title = "Все получится!"
+        static let safeArea: CGFloat = 12
+        static let topAnchor: CGFloat = 10
+        static let barHeight: CGFloat = 7
+    }
+
     private let title: UILabel = {
         let view = UILabel()
 
         view.font = .sfProSemibold(size: 13)
-        view.text = .title
+        view.text = Constants.title
         view.textColor = .systemGray
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -37,7 +44,7 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
         view.progressViewStyle = .bar
         view.trackTintColor = .lightGray
         view.tintColor = .purple
-        view.layer.cornerRadius = .barHeight/2
+        view.layer.cornerRadius = Constants.barHeight/2
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -67,26 +74,16 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 60),
-            title.topAnchor.constraint(equalTo: topAnchor, constant: .topAnchor),
-            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
+            title.topAnchor.constraint(equalTo: topAnchor, constant: Constants.topAnchor),
+            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
 
-            progress.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
-            progress.topAnchor.constraint(equalTo: topAnchor, constant: .topAnchor),
+            progress.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.safeArea),
+            progress.topAnchor.constraint(equalTo: topAnchor, constant: Constants.topAnchor),
 
-            progressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
-            progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
-            progressBar.topAnchor.constraint(equalTo: progress.bottomAnchor, constant: .topAnchor),
-            progressBar.heightAnchor.constraint(equalToConstant: .barHeight)
+            progressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
+            progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.safeArea),
+            progressBar.topAnchor.constraint(equalTo: progress.bottomAnchor, constant: Constants.topAnchor),
+            progressBar.heightAnchor.constraint(equalToConstant: Constants.barHeight)
         ])
     }
-}
-
-private extension String {
-    static let title = "Все получится!"
-}
-
-private extension CGFloat {
-    static let safeArea: CGFloat = 12
-    static let topAnchor: CGFloat = 10
-    static let barHeight: CGFloat = 7
 }
