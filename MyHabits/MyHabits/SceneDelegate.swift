@@ -9,28 +9,38 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    enum TabBarItem {
+        case habitList
+        case info
+    }
+
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: scene)
+        window = UIWindow(windowScene: scene)
 
-        let habitsVC = UINavigationController(rootViewController: HabitsViewController())
-        habitsVC.tabBarItem = UITabBarItem(title: "Привычки", image: UIImage(named: "habits_tab_icon"), selectedImage: nil)
-
-        let infoVC = UINavigationController(rootViewController: InfoViewController())
-        infoVC.tabBarItem = UITabBarItem(title: "Информация", image: UIImage(systemName: "info.circle.fill"), selectedImage: nil)
-
-        let tabBarVc = TabBarController(viewControllers: [habitsVC, infoVC])
+        let tabBarVc = UITabBarController()
+        tabBarVc.viewControllers = [createTabBarItem(for: .habitList), createTabBarItem(for: .info)]
         tabBarVc.tabBar.backgroundColor = .white
         tabBarVc.tabBar.tintColor = .purple
-        window.rootViewController = tabBarVc
-        window.makeKeyAndVisible()
-        self.window = window
+
+        window?.rootViewController = tabBarVc
+        window?.makeKeyAndVisible()
+    }
+
+    private func createTabBarItem(for item: TabBarItem) -> UINavigationController {
+        let navigationController: UINavigationController
+        switch item {
+        case .habitList:
+            navigationController = UINavigationController(rootViewController: HabitsViewController())
+            navigationController.tabBarItem = UITabBarItem(title: "Привычки", image: UIImage(named: "habits_tab_icon"), selectedImage: nil)
+        case .info:
+            navigationController = UINavigationController(rootViewController: InfoViewController())
+            navigationController.tabBarItem = UITabBarItem(title: "Информация", image: UIImage(systemName: "info.circle.fill"), selectedImage: nil)
+        }
+
+        return navigationController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

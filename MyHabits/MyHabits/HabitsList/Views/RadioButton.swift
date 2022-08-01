@@ -9,6 +9,11 @@ import UIKit
 
 final public class RadioButton: UIControl {
 
+    private enum Constants {
+        static let borderWidth: CGFloat = 2
+        static let size: CGFloat = 36
+    }
+
     private var color: UIColor!
 
     override public var isSelected: Bool {
@@ -50,12 +55,12 @@ final public class RadioButton: UIControl {
     }
 
     private func setup() {
-        layer.cornerRadius = .size / 2
+        layer.cornerRadius = Constants.size / 2
         addSubview(checkMarkImageView)
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: .size),
-            widthAnchor.constraint(equalToConstant: .size),
+            heightAnchor.constraint(equalToConstant: Constants.size),
+            widthAnchor.constraint(equalToConstant: Constants.size),
 
             checkMarkImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             checkMarkImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
@@ -79,7 +84,7 @@ final public class RadioButton: UIControl {
             layer.borderWidth = .zero
             backgroundColor = color
         } else {
-            layer.borderWidth = .borderWidth
+            layer.borderWidth = Constants.borderWidth
             layer.borderColor = color.cgColor
         }
     }
@@ -88,9 +93,4 @@ final public class RadioButton: UIControl {
         guard state == .selected || state == .highlighted else { return }
         checkMarkImageView.isHidden = false
     }
-}
-
-private extension CGFloat {
-    static let borderWidth: CGFloat = 2
-    static let size: CGFloat = 36
 }

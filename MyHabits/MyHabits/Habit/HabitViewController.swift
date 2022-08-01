@@ -9,6 +9,29 @@ import UIKit
 
 class HabitViewController: UIViewController {
 
+    private enum Text {
+        static let title = "Создать"
+        static let cancelNavBarButton = "Отменить"
+        static let createNavBarButton = "Сохранить"
+        static let nameHeader = "название"
+        static let colorHeader = "цвет"
+        static let timeHeader = "время"
+        static let placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        static let timeDescription = "Каждый день в "
+
+        static let alertTitle: String = "Удалить привычку"
+        static let alertMessage: String = "Вы хотите удалить привычку "
+        static let alertPositiveText: String = "Отмена"
+        static let alertNegativeText: String = "Удалить"
+    }
+
+    private enum Constraints {
+        static let colorCircleSize: CGFloat = 30
+        static let safeArea: CGFloat = 16
+        static let topHeaderAnchor: CGFloat = 15
+        static let topPropertyAnchor: CGFloat = 7
+    }
+
     private let viewModel: Habit?
     private var selectedColor: UIColor
 
@@ -17,7 +40,7 @@ class HabitViewController: UIViewController {
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .nameHeader.uppercased()
+        view.text = Text.nameHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -28,7 +51,7 @@ class HabitViewController: UIViewController {
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .colorHeader.uppercased()
+        view.text = Text.colorHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -39,7 +62,7 @@ class HabitViewController: UIViewController {
 
         view.font = .sfProSemibold(size: 13)
         view.textColor = .black
-        view.text = .timeHeader.uppercased()
+        view.text = Text.timeHeader.uppercased()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -48,7 +71,7 @@ class HabitViewController: UIViewController {
     private lazy var colorButton: UIButton = {
         let view = UIButton()
 
-        view.layer.cornerRadius = .colorCircleSize/2
+        view.layer.cornerRadius = Constraints.colorCircleSize/2
         view.backgroundColor = selectedColor
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(didTapColor), for: .touchUpInside)
@@ -59,7 +82,7 @@ class HabitViewController: UIViewController {
     private lazy var habitNameInput: UITextField = {
         let view = UITextField()
 
-        view.placeholder = .placeholder
+        view.placeholder = Text.placeholder
         view.font = .sfProRegular(size: 17)
         view.textColor = .black
         view.textAlignment = .left
@@ -95,7 +118,7 @@ class HabitViewController: UIViewController {
         let view = UIButton()
 
         view.isHidden = true
-        view.setTitle(.alertTitle, for: .normal)
+        view.setTitle(Text.alertTitle, for: .normal)
         view.setTitleColor(.red, for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(didTapDelete), for: .touchUpInside)
@@ -106,10 +129,10 @@ class HabitViewController: UIViewController {
     private lazy var alert: UIAlertController = {
         guard let viewModel = viewModel else { return UIAlertController() }
 
-        let message = "\(String.alertMessage) \"\(viewModel.name)\"?"
-        let alert = UIAlertController(title: .alertTitle, message: message, preferredStyle: .alert)
-        let positive = UIAlertAction(title: .alertPositiveText, style: .cancel)
-        let negative = UIAlertAction(title: .alertNegativeText, style: .destructive) {
+        let message = "\(Text.alertMessage) \"\(viewModel.name)\"?"
+        let alert = UIAlertController(title: Text.alertTitle, message: message, preferredStyle: .alert)
+        let positive = UIAlertAction(title: Text.alertPositiveText, style: .cancel)
+        let negative = UIAlertAction(title: Text.alertNegativeText, style: .destructive) {
             UIAlertAction in
             self.deleteHabitIfNeeded(viewModel)
             self.navigationController?.popToRootViewController(animated: true)
@@ -161,7 +184,7 @@ class HabitViewController: UIViewController {
     // MARK: - Private functions
 
     private func setup() {
-        title = .title
+        title = Text.title
         setupHabitProperty()
         let subviews = [nameHeader, colorHeader, timeHeader,
                         colorButton, habitNameInput, timePicker, habitTimeDescription, deleteButton]
@@ -169,36 +192,36 @@ class HabitViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             nameHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
-            nameHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            nameHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            nameHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            nameHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
-            habitNameInput.topAnchor.constraint(equalTo: nameHeader.bottomAnchor, constant: .topPropertyAnchor),
-            habitNameInput.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            habitNameInput.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            habitNameInput.topAnchor.constraint(equalTo: nameHeader.bottomAnchor, constant: Constraints.topPropertyAnchor),
+            habitNameInput.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            habitNameInput.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
-            colorHeader.topAnchor.constraint(equalTo: habitNameInput.bottomAnchor, constant: .topHeaderAnchor),
-            colorHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            colorHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            colorHeader.topAnchor.constraint(equalTo: habitNameInput.bottomAnchor, constant: Constraints.topHeaderAnchor),
+            colorHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            colorHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
-            colorButton.topAnchor.constraint(equalTo: colorHeader.bottomAnchor, constant: .topPropertyAnchor),
-            colorButton.heightAnchor.constraint(equalToConstant: .colorCircleSize),
-            colorButton.widthAnchor.constraint(equalToConstant: .colorCircleSize),
-            colorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
+            colorButton.topAnchor.constraint(equalTo: colorHeader.bottomAnchor, constant: Constraints.topPropertyAnchor),
+            colorButton.heightAnchor.constraint(equalToConstant: Constraints.colorCircleSize),
+            colorButton.widthAnchor.constraint(equalToConstant: Constraints.colorCircleSize),
+            colorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
 
-            timeHeader.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: .topHeaderAnchor),
-            timeHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            timeHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            timeHeader.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: Constraints.topHeaderAnchor),
+            timeHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            timeHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
-            habitTimeDescription.topAnchor.constraint(equalTo: timeHeader.bottomAnchor, constant: .topPropertyAnchor),
-            habitTimeDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            habitTimeDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            habitTimeDescription.topAnchor.constraint(equalTo: timeHeader.bottomAnchor, constant: Constraints.topPropertyAnchor),
+            habitTimeDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            habitTimeDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
-            timePicker.topAnchor.constraint(equalTo: habitTimeDescription.bottomAnchor, constant: .topHeaderAnchor),
-            timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .safeArea),
-            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.safeArea),
+            timePicker.topAnchor.constraint(equalTo: habitTimeDescription.bottomAnchor, constant: Constraints.topHeaderAnchor),
+            timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.safeArea),
+            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.safeArea),
 
             deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -.safeArea)
+            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Constraints.safeArea)
         ])
     }
 
@@ -217,7 +240,7 @@ class HabitViewController: UIViewController {
 
     private func setupTimeDescription() {
         let date = timePicker.date
-        let attributedString = NSMutableAttributedString(string: .timeDescription + dateFormatter.string(from: date))
+        let attributedString = NSMutableAttributedString(string: Text.timeDescription + dateFormatter.string(from: date))
         let range = attributedString.getRangeOfString(textToFind: dateFormatter.string(from: date))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple, range: range)
         habitTimeDescription.attributedText = attributedString
@@ -237,13 +260,13 @@ class HabitViewController: UIViewController {
         navBar?.tintColor = .purple
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: .createNavBarButton,
+            title: Text.createNavBarButton,
             style: .plain,
             target: self,
             action: #selector(didTapSaveButton))
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: .cancelNavBarButton,
+            title: Text.cancelNavBarButton,
             style: .plain,
             target: self,
             action: #selector(didTapCancelButton))
@@ -326,27 +349,4 @@ extension NSMutableAttributedString {
     func getRangeOfString(textToFind:String) -> NSRange{
         return self.mutableString.range(of: textToFind)
     }
-}
-
-private extension String {
-    static let title = "Создать"
-    static let cancelNavBarButton = "Отменить"
-    static let createNavBarButton = "Сохранить"
-    static let nameHeader = "название"
-    static let colorHeader = "цвет"
-    static let timeHeader = "время"
-    static let placeholder = "Бегать по утрам, спать 8 часов и т.п."
-    static let timeDescription = "Каждый день в "
-
-    static let alertTitle: String = "Удалить привычку"
-    static let alertMessage: String = "Вы хотите удалить привычку "
-    static let alertPositiveText: String = "Отмена"
-    static let alertNegativeText: String = "Удалить"
-}
-
-private extension CGFloat {
-    static let colorCircleSize: CGFloat = 30
-    static let safeArea: CGFloat = 16
-    static let topHeaderAnchor: CGFloat = 15
-    static let topPropertyAnchor: CGFloat = 7
 }

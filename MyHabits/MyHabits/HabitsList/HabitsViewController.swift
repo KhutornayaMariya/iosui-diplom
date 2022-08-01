@@ -9,6 +9,11 @@ import UIKit
 
 class HabitsViewController: UIViewController {
 
+    private enum Constants {
+        static let title = "Сегодня"
+        static let progressSectionIndex: Int = 0
+    }
+
     private var dataItems: [Habit] = []
 
     private lazy var collectionView: UICollectionView = {
@@ -43,7 +48,7 @@ class HabitsViewController: UIViewController {
     }
 
     private func setup() {
-        title = .title
+        title = Constants.title
         view.backgroundColor = .white
         view.addSubview(collectionView)
 
@@ -75,7 +80,7 @@ class HabitsViewController: UIViewController {
         return UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             switch sectionIndex {
-            case .progressSectionIndex:
+            case Constants.progressSectionIndex:
                 return .progressSection
             default:
                 return .habitSection
@@ -108,7 +113,7 @@ extension HabitsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case .progressSectionIndex:
+        case Constants.progressSectionIndex:
             return 1
         default:
             return dataItems.count
@@ -117,7 +122,7 @@ extension HabitsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-        case .progressSectionIndex:
+        case Constants.progressSectionIndex:
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "ProgressCollectionViewCell", for: indexPath) as! ProgressCollectionViewCell
             let todayProgress = HabitsStore.shared.todayProgress
@@ -137,6 +142,8 @@ extension HabitsViewController: UICollectionViewDataSource {
 // MARK: - NSCollectionLayoutSection
 
 private extension NSCollectionLayoutSection {
+    static let safeArea: CGFloat = 16
+
     static let progressSection: NSCollectionLayoutSection = {
 
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
@@ -146,7 +153,7 @@ private extension NSCollectionLayoutSection {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
 
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 22, leading: .safeArea, bottom: 0, trailing: .safeArea)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 22, leading: safeArea, bottom: 0, trailing: safeArea)
 
         return section
     }()
@@ -161,7 +168,7 @@ private extension NSCollectionLayoutSection {
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 12
-        section.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: .safeArea, bottom: .safeArea, trailing: .safeArea)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: safeArea, bottom: safeArea, trailing: safeArea)
 
         return section
     }()
@@ -170,23 +177,11 @@ private extension NSCollectionLayoutSection {
 extension HabitsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-        case .progressSectionIndex:
+        case Constants.progressSectionIndex:
             return
         default:
             let habit = dataItems[indexPath.row]
             navigationController?.pushViewController(HabitDetailsViewController(viewModel: habit), animated: true)
         }
     }
-}
-
-private extension String {
-    static let title = "Сегодня"
-}
-
-private extension Int {
-    static let progressSectionIndex: Int = 0
-}
-
-private extension CGFloat {
-    static let safeArea: CGFloat = 16
 }
