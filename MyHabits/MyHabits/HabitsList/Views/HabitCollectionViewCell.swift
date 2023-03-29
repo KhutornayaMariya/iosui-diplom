@@ -9,6 +9,10 @@ import UIKit
 
 final class HabitCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "HabitCollectionViewCell"
+
+    private enum Constants {
+        static let safeArea: CGFloat = 20
+    }
     
     private let title: UILabel = {
         let view = UILabel()
@@ -87,14 +91,14 @@ final class HabitCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 130),
-            title.topAnchor.constraint(equalTo: topAnchor, constant: .safeArea),
-            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
+            title.topAnchor.constraint(equalTo: topAnchor, constant: Constants.safeArea),
+            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
             
-            subtitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
+            subtitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
             subtitle.bottomAnchor.constraint(equalTo: counter.topAnchor, constant: -30),
             
-            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
-            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.safeArea),
+            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
+            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.safeArea),
             
             tracker.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
             tracker.centerYAnchor.constraint(equalTo: centerYAnchor)
@@ -103,12 +107,6 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func tapWrapper() {
-        if onTapTrackerHander != nil {
-            onTapTrackerHander?()
-        }
+        self.onTapTrackerHander?()
     }
-}
-
-private extension CGFloat {
-    static let safeArea: CGFloat = 20
 }

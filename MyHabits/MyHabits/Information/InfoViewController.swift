@@ -9,6 +9,11 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
+    private enum Constants {
+        static let title = "Информация"
+        static let safeArea: CGFloat = 16
+    }
+
     private let info: HabitsInformation = HabitsInformation()
 
     private let scrollView: UIScrollView = {
@@ -64,7 +69,7 @@ class InfoViewController: UIViewController {
     }
 
     private func setup() {
-        title = .title
+        title = Constants.title
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -86,21 +91,13 @@ class InfoViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
             textTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
-            textTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .safeArea),
-            textTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.safeArea),
+            textTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.safeArea),
+            textTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.safeArea),
 
-            desc.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: .safeArea),
-            desc.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .safeArea),
-            desc.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.safeArea),
-            desc.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.safeArea),
+            desc.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: Constants.safeArea),
+            desc.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.safeArea),
+            desc.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.safeArea),
+            desc.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.safeArea),
         ])
     }
-}
-
-private extension CGFloat {
-    static let safeArea: CGFloat = 16
-}
-
-private extension String {
-    static let title = "Информация"
 }

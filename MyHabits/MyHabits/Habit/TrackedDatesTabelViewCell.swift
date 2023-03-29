@@ -9,6 +9,13 @@ import UIKit
 
 final class TrackedDatesTabelViewCell: UITableViewCell {
 
+    private enum Constants {
+        static let today = "Сегодня"
+        static let yesterday = "Вчера"
+
+        static let safeArea: CGFloat = 16
+    }
+
     private let title: UILabel = {
         let view = UILabel()
 
@@ -52,18 +59,18 @@ final class TrackedDatesTabelViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             title.centerYAnchor.constraint(equalTo: centerYAnchor),
-            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .safeArea),
+            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.safeArea),
 
             image.centerYAnchor.constraint(equalTo: centerYAnchor),
-            image.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.safeArea),
+            image.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.safeArea),
         ])
     }
     
     private func setupDateName(for date: Date) {
         if Calendar.current.isDateInToday(date) {
-            title.text = .today
+            title.text = Constants.today
         } else if Calendar.current.isDateInYesterday(date) {
-            title.text = .yesterday
+            title.text = Constants.yesterday
         } else {
             title.text = dateFormatter.string(from: date)
         }
@@ -75,13 +82,4 @@ final class TrackedDatesTabelViewCell: UITableViewCell {
         formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
-}
-
-private extension String {
-    static let today = "Сегодня"
-    static let yesterday = "Вчера"
-}
-
-private extension CGFloat {
-    static let safeArea: CGFloat = 16
 }
